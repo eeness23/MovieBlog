@@ -1,0 +1,28 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{admin/shared/head :: head(title='Create Category or Edit')}"></div>
+<body>
+<div class="page-container">
+    <div th:replace="~{admin/shared/sidebar :: sidebar}"></div>
+    <div class="main-content">
+        <div th:replace="~{admin/shared/container :: header(title='Create Category or Edit')}"></div>
+        <div class="col-12 mt-5">
+            <form class="card" method="post" th:object="${category}" th:action="@{/admin/category/save}" >
+                <div class="card-body">
+                    <input type="hidden" th:field="*{id}">
+                    <div class="form-group">
+                        <label for="example-title-input" class="col-form-label">Name</label>
+                        <input class="form-control" type="text" id="example-title-input" th:field="*{name}">
+                    </div>
+                    <button class="btn btn-primary pull-right" type="submit">Save</button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+    <div th:replace="~{admin/shared/footer :: footer}"></div>
+    <div th:replace="~{admin/shared/javascripts :: js}"></div>
+</div>
+</body>
+</html>

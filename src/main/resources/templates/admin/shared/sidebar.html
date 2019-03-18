@@ -1,0 +1,30 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div class="sidebar-menu" th:fragment="sidebar">
+	<div class="sidebar-header">
+		<div class="logo">
+			<a href="index.html"><img th:src="@{/admin/images/icon/logo.png}" alt="logo"></a>
+			<a href="">addad</a>
+		</div>
+	</div>
+	<div class="main-menu">
+		<div class="menu-inner">
+			<nav>
+				<ul class="metismenu" id="menu">
+					<li><a th:href="@{/admin/user}"><i class="fa fa-user"></i> <span>Users</span></a></li>
+					<li><a th:href="@{/admin/role}"><i class="fa fa-key"></i> <span>Roles</span></a></li>
+					<li><a th:href="@{/admin/movie}"><i class="fa fa-film"></i> <span>Movies</span></a></li>
+					<li><a th:href="@{/admin/language}"><i class="fa fa-language"></i> <span>Languages</span></a></li>
+					<li><a th:href="@{/admin/category}"><i class="fa fa-database"></i> <span>Categories</span></a></li>
+					<li><a th:href="@{/admin/cast}"><i class="fa fa-users"></i> <span>Casts</span></a></li>
+					<li><a th:href="@{/admin/collection}"><i class="fa fa-tasks"></i> <span>Collections</span></a></li>
+					<li><a th:href="@{/admin/settings}"><i class="fa fa-gear"></i> <span>Settings</span></a></li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+</body>
+</html>

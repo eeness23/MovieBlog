@@ -1,0 +1,46 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+</head>
+<body>
+<div class="movies_nav" th:fragment="navbar(categories)">
+	<div class="container">
+		<nav class="navbar navbar-default">
+			<div class="navbar-header navbar-left">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
+				<nav>
+					<ul class="nav navbar-nav" style="display: flex;justify-content: center;">
+						<li><a th:href="@{/}">Home</a></li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Categories <b class="caret"></b></a>
+							<ul class="dropdown-menu multi-column columns-3">
+								<li>
+									<div class="col-sm-12">
+										<ul class="multi-column-dropdown">
+											<th:block th:each="category : ${categories}">
+												<li><a th:href="@{'/category/'+${category.id}}" th:text="${category.name}">Action</a></li>
+											</th:block>
+										</ul>
+									</div>
+									<div class="clearfix"></div>
+								</li>
+							</ul>
+						</li>
+						<li><a th:href="@{/collections}">Collections</a></li>
+						<li><a th:href="@{/contact}">Contact</a></li>
+					</ul>
+				</nav>
+			</div>
+		</nav>
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,67 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{admin/shared/head :: head(title='Movie Details')}"></div>
+<body>
+<div class="page-container">
+    <div th:replace="~{admin/shared/sidebar :: sidebar}"></div>
+    <div class="main-content">
+        <div th:replace="~{admin/shared/container :: header(title ='Movie Details')}"></div>
+        <div class="col-12 mt-5">
+            <div class="card">
+
+                    <img  th:src="@{'/images/' + ${movie.image.name}}" th:width="150" class="rounded mx-auto d-block"
+                          style="margin-top: 10px;margin-bottom: -10px;">
+
+                <div class="card-body" th:object="${movie}">
+                    <div class="form-group">
+                        <label for="example-title-input" class="col-form-label">Title</label>
+                        <input class="form-control" type="text" id="example-title-input" th:field="*{name}" readonly/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="example-date-input" class="col-form-label">Publish Year</label>
+                        <input type="text" id="example-date-input" class="form-control" th:value="${#dates.format(movie.publishYear, 'yyyy-MM-dd')}" readonly />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="example-date-input2" class="col-form-label">Language</label>
+                        <input type="text" id="example-date-input2" class="form-control" th:field="*{language.name}" readonly />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label" >Categories</label>
+                        <br>
+                        <div class="custom-control-inline" th:each="category: ${movie.categories}">
+                            <label class="form-control" th:text="${category.name}"></label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label" >Casts</label>
+                        <br>
+                        <div class="custom-control-inline" th:each="cast: ${movie.casts}">
+                            <label class="form-control" th:text="${cast.name}"></label>
+                        </div>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Description</span>
+                        </div>
+                        <textarea class="form-control" rows="7" aria-label="With textarea" th:field="*{description}" readonly></textarea>
+                    </div>
+
+                    <div class="btn-group mb-xl-3 pull-right" role="group" aria-label="Basic example">
+                        <a th:href="@{/admin/movie}"> <button type="button" class="btn btn-primary">Back to List</button></a>
+                        <a th:href="@{'/admin/movie/' + ${movie.id} + '/edit'}"><button type="button" class="btn btn-success">Edit</button></a>
+                    </div>
+
+                </div>
+        </div>
+        </div>
+    </div>
+    <div th:replace="~{admin/shared/footer :: footer}"></div>
+    <div th:replace="~{admin/shared/javascripts :: js}"></div>
+</div>
+</body>
+</html>

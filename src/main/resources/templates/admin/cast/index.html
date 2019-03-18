@@ -1,0 +1,44 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{admin/shared/head :: head(title='Casts')}"></div>
+<body>
+<div class="page-container">
+    <div th:replace="~{admin/shared/sidebar :: sidebar}"></div>
+    <div class="main-content">
+        <div th:replace="~{admin/shared/container :: header(title='Casts')}"></div>
+        <div class="col-lg-11 mt-5">
+            <a th:href="@{/admin/cast/new}"><button class="btn btn-success">Add Cast</button></a>
+        <div class="card">
+            <div class="card-body">
+                <div class="single-table">
+                    <div class="table-responsive">
+                        <table class="table text-center">
+                            <thead class="text-uppercase bg-primary">
+                            <tr class="text-white">
+                                <th scope="col">Name</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="cast : ${casts}">
+                                <td th:text="${cast.name}">title</td>
+                                 <td><a th:href="@{'/admin/cast/'+${cast.id}+'/edit'}"><i class="fa fa-edit"></i></a>
+                                    <a th:href="@{/admin/cast/delete(castId=${cast.id})}"
+                                                  onclick="if (!(confirm('Are you sure you want to delete this user'))) return false">
+                                        <i class="ti-trash"> </i>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div th:replace="~{admin/shared/footer :: footer}"></div>
+    <div th:replace="~{admin/shared/javascripts :: js}"></div>
+</div>
+</body>
+</html>

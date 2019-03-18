@@ -1,0 +1,69 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{admin/shared/head :: head(title='Create Movie or Edit')}"></div>
+<body>
+<div class="page-container">
+    <div th:replace="~{admin/shared/sidebar :: sidebar}"></div>
+    <div class="main-content">
+        <div th:replace="~{admin/shared/container :: header(title='Create Movie or Edit')}"></div>
+        <div class="col-12 mt-5">
+            <form class="card" method="post" th:object="${movie}" th:action="@{/admin/movie/save}" >
+                <div class="card-body">
+                    <input type="hidden" th:field="*{id}">
+
+                    <div class="form-group">
+                        <label for="example-title-input" class="col-form-label">Title</label>
+                        <input class="form-control" type="text" id="example-title-input" th:field="*{name}">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="example-date-input" class="col-form-label">Publish Year</label>
+                        <input type="date" id="example-date-input" class="form-control" name="publishYear" th:value="${#dates.format(movie.publishYear, 'yyyy-MM-dd')}" />
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-form-label" >Language</label>
+                        <select class="custom-select" th:field="*{language}">
+                            <option th:if="${movie.language}==null" th:each="lan : ${languages}" th:value="${lan.id}" th:text="${lan.name}" ></option>
+                            <option th:if="${movie.language}!=null" th:each="lan : ${languages}" th:value="${lan.id}" th:text="${lan.name}" th:selected="${movie.language.name == lan.name}" ></option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label" >Categories</label>
+                        <div class="custom-control custom-checkbox custom-control-inline" th:each="category: ${categories}">
+                            <input  type="checkbox" class="custom-control-input" th:field="*{categories}"
+                                    th:value="${category.id}" th:id="${category.id} +'category'" >
+                            <label class="custom-control-label" th:text="${category.name}" th:for="${category.id}+'category'">checked Checkbox</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label" >Casts</label>
+                        <div class="custom-control custom-checkbox custom-control   -inline" th:each="cast: ${casts}">
+                            <input  type="checkbox" class="custom-control-input" th:field="*{casts}"
+                                    th:value="${cast.id}" th:id="${cast.id} +'cast'" >
+                            <label class="custom-control-label" th:text="${cast.name}" th:for="${cast.id}+'cast'">checked Checkbox</label>
+                        </div>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Description</span>
+                        </div>
+                        <textarea class="form-control" aria-label="With textarea" th:field="*{description}"></textarea>
+                    </div>
+                    <button class="btn btn-primary pull-right" type="submit">Save</button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+    <div th:replace="~{admin/shared/footer :: footer}"></div>
+    <div th:replace="~{admin/shared/javascripts :: js}"></div>
+</div>
+</body>
+</html>

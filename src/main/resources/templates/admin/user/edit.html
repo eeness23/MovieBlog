@@ -1,0 +1,54 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{admin/shared/head :: head}"></div>
+<body>
+<div class="page-container">
+    <div th:replace="~{admin/shared/sidebar :: sidebar}"></div>
+    <div class="main-content">
+        <div th:replace="~{admin/shared/container :: header(title='Edit')}"></div>
+        <div class="col-12 mt-5">
+            <form class="card" method="post" th:object="${user}" th:action="@{/admin/user/save}" >
+                <div class="card-body">
+                    <input type="hidden" th:field="*{id}">
+                    <div class="form-group">
+                        <label for="example-text-input" class="col-form-label">Full Name</label>
+                        <input class="form-control" type="text" id="example-text-input" th:field="*{name}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="example-email-input" class="col-form-label">Email</label>
+                        <input class="form-control" type="email" id="example-email-input" th:field="*{email}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputPassword" class="">Password</label>
+                        <input type="password" class="form-control" id="inputPassword"placeholder="Password"  name="password" th:value="${user.password}">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="">Roles</label>
+                        <br>
+                         <div class="custom-control custom-checkbox custom-control-inline"
+                             th:each="role: ${multiCheckboxSelectedValues}">
+
+                            <input type="checkbox" class="custom-control-input" th:id="${role.id}"
+                                   th:field="*{roles}"
+                                   th:value="${role.id}" >
+                            <label class="custom-control-label" th:for="${role.id}"
+                                   th:text="${role.name}">checked Checkbox</label>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary pull-right" type="submit">Update</button>
+                </div>
+            </form>
+        </div>
+
+
+
+    </div>
+    <div th:replace="~{admin/shared/footer :: footer}"></div>
+    <div th:replace="~{admin/shared/javascripts :: js}"></div>
+</div>
+</body>
+</html>

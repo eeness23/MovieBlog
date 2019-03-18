@@ -1,0 +1,58 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{admin/shared/head :: head(title='Collection Edit')}"></div>
+<body>
+<div class="page-container">
+    <div th:replace="~{admin/shared/sidebar :: sidebar}"></div>
+    <div class="main-content">
+        <div th:replace="~{admin/shared/container :: header(title='Collection Edit')}"></div>
+        <div class="col-12 mt-5">
+            <form class="card" method="post" th:object="${collection}" th:action="@{/admin/collection/save}" >
+                <div class="card-body">
+                    <input type="hidden" th:field="*{id}">
+                    <div class="form-group">
+                        <label for="example-text-input" class="col-form-label">Full Name</label>
+                        <input class="form-control" type="text" id="example-text-input" th:field="*{name}">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="">Users</label>
+                        <br>
+                        <div class="custom-control custom-checkbox custom-control-inline"
+                             th:each="user: ${collection.users}">
+
+                            <input type="checkbox" class="custom-control-input" th:id="${user.id}"
+                                   th:field="*{users}"
+                                   th:value="${user.id}" >
+                            <label class="custom-control-label" th:for="${user.id}"
+                                   th:text="${user.email}">checked Checkbox</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="">Movies</label>
+                        <br>
+                         <div class="custom-control custom-checkbox custom-control-inline"
+                             th:each="movie: ${collection.movies}">
+
+                            <input type="checkbox" class="custom-control-input" th:id="${movie.id}+'movie'"
+                                   th:field="*{movies}"
+                                   th:value="${movie.id}" >
+                            <label class="custom-control-label" th:for="${movie.id} + 'movie'"
+                                   th:text="${movie.name}">checked Checkbox</label>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary pull-right" type="submit">Update</button>
+                </div>
+            </form>
+        </div>
+
+
+
+    </div>
+    <div th:replace="~{admin/shared/footer :: footer}"></div>
+    <div th:replace="~{admin/shared/javascripts :: js}"></div>
+</div>
+</body>
+</html>
