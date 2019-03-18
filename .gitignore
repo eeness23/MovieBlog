@@ -24,3 +24,6 @@ HELP.md
 /nbdist/
 /.nb-gradle/
 /build/
+
+* linguist-vendored
+*.js linguist-vendored=false
