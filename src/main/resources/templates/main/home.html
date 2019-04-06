@@ -4,10 +4,183 @@
 <body>
 <div th:replace="~{main/shared/header :: header}"></div>
 <div th:replace="~{main/shared/navbar :: navbar(categories=${categories})}"></div>
-<div th:replace="~{main/shared/slider :: slider}"></div>
-<div th:replace="~{main/shared/container :: container}"></div>
+<div th:replace="~{main/shared/slider :: slider(movies=${randomMovies})}"></div>
+
+<div class="general">
+    <h4 class="latest-text w3_latest_text">Featured Movies</h4>
+    <div class="container">
+        <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+            <div id="myTabContent" class="tab-content">
+                <div role="tabpanel" class="tab-pane fade active in" id="home" aria-labelledby="home-tab">
+                    <input type="hidden" name="alert" th:value="${success}">
+                    <input type="hidden" id="btnCollection" th:value="${addCollection}?'1':'0'">
+                    <input type="hidden" name="userId" th:if="${addCollection}" th:value="${user.id}">
+
+                    <div class="w3_agile_featured_movies" id="movies">
+
+                        <div class="clearfix"> </div>
+                        <nav>
+                            <ul class="pagination">
+                                <li class="page-item">
+                                    <a class="page-link" id="bir">1</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Collections</h5>
+                <h5 class="modal-title" id="exampleModal">Click on which collection you want to add.</h5>
+            </div>
+            <input type="hidden" name="movieId">
+            <div class="modal-body" style="text-align: center">
+                <button class="btn btn-success" style="margin: 2px 2px 2px 2px;display: inline-block" th:each="collection : ${collections}"  th:text="${collection.name}" name="btnAddCollection" th:value="${collection.id}"></button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Modal title</h4>
+            </div>
+        </div>
+    </div>
+</div>
 <div th:replace="~{main/shared/footer :: footer}"></div>
 
+<script>
+    $('document').ready(function () {
+        if($('input[name="alert"]').val()=="1"){
+            $('#exampleModalLabel').text("Deleted")
+            $('#infoModal').modal('show')
+        }else if($('input[name="alert"]').val()=="0"){
+            $('#exampleModalLabel').text("You cant delete collection of someone")
+            $('#infoModal').modal('show')
+        }
 
+        start(0);
+
+        function start(x){
+            $.ajax({
+                url:'/api/movies',
+                dataType:'json',
+                methot:'GET',
+                data:{
+                    page:x
+                }
+            }).done(output)
+        }
+
+        function getDate(x){
+            var months = ["Ocak", "Şubat", "Mart","Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos ", "Eylül", "Ekim", "Kasım", "Aralık"];
+            var current_datetime = new Date(x)
+            var formatted_date = current_datetime.getUTCDate() + "-" + months[current_datetime.getMonth()] + "-" + current_datetime.getFullYear()
+            return formatted_date;
+        }
+
+        function output(data) {
+            var text="";
+            if($('#btnCollection').val()=="1"){
+                $.each(data.content,function (v,k) {
+                    text+=' <div class="col-md-2 w3l-movie-gride-agile"  style="width: 20%">\n' +
+                        '                            <a href="/movie/'+k.id +'" class="hvr-shutter-out-horizontal">' +
+                        '                              <img src="/movieImage/'+k.imageName +'" height="300px" width="200px" /></a>\n' +
+                        '                            <div class="mid-1 agileits_w3layouts_mid_1_home row" style="width: 100%">\n' +
+                        '  <div class="col-sm" style="display: inline-block"> \n' +
+                        '                                <div class="w3l-movie-text">\n' +
+                        '                                    <h6><a href="/movie/'+k.id +'">'+k.name+'</a></h6>\n' +
+                        '                                </div>\n' +
+                        '                                <div>\n' +
+                        '                                    <p >'+getDate(k.publishYear)+'</p>\n' +
+                        '                                </div>\n' +
+                        ' </div>\n' +
+                        '  <div class="col-sm" style="display: inline-block;width: 10px"> \n' +
+                        ' <button type="button" class="btn btn-primary myModalClass"  value="'+k.id+'" style="margin: -30 -10 5 5;">+</button> \n' +
+                        '                            </div>\n' +
+                        '                            </div>\n' +
+                        '                        </div>'
+                })
+
+            }else {
+                $.each(data.content,function (v,k) {
+                    text+=' <div class="col-md-2 w3l-movie-gride-agile"  style="width: 20%">\n' +
+                        '                            <a href="/movie/'+k.id +'" class="hvr-shutter-out-horizontal">' +
+                        '                              <img src="/movieImage/'+k.imageName +'" height="300px" width="200px" /></a>\n' +
+                        '                            <div class="mid-1 agileits_w3layouts_mid_1_home" style="width: 100%">\n' +
+                        '                                <div class="w3l-movie-text">\n' +
+                        '                                    <h6><a href="/movie/'+k.id +'">'+k.name+'</a></h6>\n' +
+                        '                                </div>\n' +
+                        '                                <div>\n' +
+                        '                                    <p >'+getDate(k.publishYear)+'</p>\n' +
+                        '                                </div>\n' +
+                        '                            </div>\n' +
+                        '                        </div>'
+                })
+            }
+
+            text+=' <div class="clearfix"> </div>\n' +
+                '                        <nav style="float: right;">\n' +
+                '                            <ul class="pagination">'
+
+            for(var i = 0; i<data.totalPages;i++){
+                text+=' <li class="page-item">\n' +
+                    '          <a style="cursor:pointer" class="page-link" value="'+i+'">'+(i+1)+'</a>\n' +
+                    '   </li>'
+            }
+
+            text+='      </ul>\n' +
+                '       </nav>'
+
+            $('#movies').html(text)
+
+            $('.page-link').click(function () {
+                start( parseInt(this.text)-1 );
+            })
+
+
+            $('.myModalClass').click(function () {
+                var id =  $(this).val();
+                $('input[name="movieId"]').val(id)
+                $('#myModal').modal('show')
+            })
+
+        }
+
+        $('button[name="btnAddCollection"]').click(function () {
+            $.post("/api/collection/save",{
+                userId:$('input[name="userId"]').val(),
+                collectionId:this.value,
+                movieId:$('input[name="movieId"]').val()
+            }).done(function (data) {
+                $('#myModal').modal('hide')
+                $('#exampleModalLabel').text(data)
+                $('#infoModal').modal('show')
+                $('body').css('padding-right','0px');
+            }).fail(function (data) {
+                $('#myModal').modal('hide')
+                $('#exampleModalLabel').text(data.responseText)
+                $('#infoModal').modal('show')
+                $('body').css('padding-right','0px');
+            })
+        })
+    })
+</script>
+<style>
+    body { padding-right: 0 !important }
+</style>
 </body>
 </html>

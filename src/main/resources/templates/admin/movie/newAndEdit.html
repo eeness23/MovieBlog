@@ -1,31 +1,42 @@
 
 <html xmlns:th="http://www.thymeleaf.org">
-<div th:replace="~{admin/shared/head :: head(title='Create Movie or Edit')}"></div>
+<div th:replace="~{admin/shared/head :: head(title = ${isAdd}?'Create Applicant':'Edit Applicant')}"></div>
 <body>
 <div class="page-container">
     <div th:replace="~{admin/shared/sidebar :: sidebar}"></div>
     <div class="main-content">
         <div th:replace="~{admin/shared/container :: header(title='Create Movie or Edit')}"></div>
         <div class="col-12 mt-5">
-            <form class="card" method="post" th:object="${movie}" th:action="@{/admin/movie/save}" >
+            <form  id="form_check" onsubmit="return atleast_onecheckbox(event)"  class="card" method="post" th:object="${movie}" th:action="@{/admin/movie/save}" enctype="multipart/form-data">
+
+                <img th:if="${!isAdd}"  th:src="@{'/movieImage/' + ${movie.imageName}}" th:width="150" class="rounded mx-auto d-block"
+                      style="margin-top: 10px;margin-bottom: -10px;">
+
+
                 <div class="card-body">
                     <input type="hidden" th:field="*{id}">
+                    <input type="hidden" th:field="*{imageName}">
+
+                    <div class="form-group">
+                        <label for="example-title-file" class="col-form-label" th:text="${isAdd}?'Image':'Change Image'">Change Image</label>
+                        <input class="form-control" style="height: auto;" type="file" id="example-title-file"  placeholder="Upload Image" th:field="*{image}" th:required="${isAdd}">
+                    </div>
 
                     <div class="form-group">
                         <label for="example-title-input" class="col-form-label">Title</label>
-                        <input class="form-control" type="text" id="example-title-input" th:field="*{name}">
+                        <input class="form-control" type="text" id="example-title-input" th:field="*{name}" required>
                     </div>
 
 
                     <div class="form-group">
                         <label for="example-date-input" class="col-form-label">Publish Year</label>
-                        <input type="date" id="example-date-input" class="form-control" name="publishYear" th:value="${#dates.format(movie.publishYear, 'yyyy-MM-dd')}" />
+                        <input type="date" id="example-date-input" class="form-control" name="publishYear" th:value="${#dates.format(movie.publishYear, 'yyyy-MM-dd')}" required />
                     </div>
 
 
                     <div class="form-group">
                         <label class="col-form-label" >Language</label>
-                        <select class="custom-select" th:field="*{language}">
+                        <select class="custom-select" th:field="*{language}" required>
                             <option th:if="${movie.language}==null" th:each="lan : ${languages}" th:value="${lan.id}" th:text="${lan.name}" ></option>
                             <option th:if="${movie.language}!=null" th:each="lan : ${languages}" th:value="${lan.id}" th:text="${lan.name}" th:selected="${movie.language.name == lan.name}" ></option>
                         </select>
@@ -34,8 +45,8 @@
                     <div class="form-group">
                         <label class="col-form-label" >Categories</label>
                         <div class="custom-control custom-checkbox custom-control-inline" th:each="category: ${categories}">
-                            <input  type="checkbox" class="custom-control-input" th:field="*{categories}"
-                                    th:value="${category.id}" th:id="${category.id} +'category'" >
+                            <input type="checkbox" class="custom-control-input checkCategories" th:field="*{categories}"
+                                    th:value="${category.id}" th:id="${category.id} +'category'">
                             <label class="custom-control-label" th:text="${category.name}" th:for="${category.id}+'category'">checked Checkbox</label>
                         </div>
                     </div>
@@ -43,8 +54,8 @@
                     <div class="form-group">
                         <label class="col-form-label" >Casts</label>
                         <div class="custom-control custom-checkbox custom-control   -inline" th:each="cast: ${casts}">
-                            <input  type="checkbox" class="custom-control-input" th:field="*{casts}"
-                                    th:value="${cast.id}" th:id="${cast.id} +'cast'" >
+                            <input type="checkbox" class="custom-control-input checkCasts" th:field="*{casts}"
+                                    th:value="${cast.id}" th:id="${cast.id} +'cast'">
                             <label class="custom-control-label" th:text="${cast.name}" th:for="${cast.id}+'cast'">checked Checkbox</label>
                         </div>
                     </div>
@@ -53,9 +64,9 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">Description</span>
                         </div>
-                        <textarea class="form-control" aria-label="With textarea" th:field="*{description}"></textarea>
+                        <textarea class="form-control" aria-label="With textarea" th:field="*{description}" required></textarea>
                     </div>
-                    <button class="btn btn-primary pull-right" type="submit">Save</button>
+                    <button class="btn btn-primary pull-right" type="submit" th:text="${isAdd}?'Save':'Update'">Save</button>
                 </div>
 
             </form>
@@ -66,4 +77,21 @@
     <div th:replace="~{admin/shared/javascripts :: js}"></div>
 </div>
 </body>
+<script>
+    function atleast_onecheckbox(e) {
+        if(!$(".checkCategories").is(':checked')){
+            e.preventDefault();
+            alert('no way you submit it without checking a category');
+            return false;
+        }
+        if(!$(".checkCasts").is(':checked')){
+            e.preventDefault();
+            alert('no way you submit it without checking a cast');
+            return false;
+        }
+
+
+
+    }
+</script>
 </html>

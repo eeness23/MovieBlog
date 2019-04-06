@@ -43,73 +43,17 @@ public class DatabaseLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String a = "{bcrypt}"+encoder.encode("1");
-        Category korku = new Category("korku");
-        Category zalim = new Category("Zalimlar");
-        Category komedi= new Category("komedi");
-        Language tr = new Language("türkce");
-        Language eng = new Language("ingilizce");
-        Cast enes = new Cast("enes");
-        Cast ahmet = new Cast("ahmet");
-        Cast zulfu = new Cast("zülfü");
-        Cast goksel = new Cast("göksel");
-        Role userRole = new Role("ROLE_USER");
-        Role adminRole =new Role("ROLE_ADMIN");
+    /*    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String a = "{bcrypt}"+encoder.encode("admin");
+        String ab = "{bcrypt}"+encoder.encode("user");
+        User admin = new User("admin","admin@gmail.com",a);
+        admin.setConfirmPassword(a);
+        admin.addRole(roleService.findByName("ROLE_ADMIN"));
+        admin.addRole(roleService.findByName("ROLE_USER"));
+        userService.save(admin);
 
-/*        roleService.save(userRole);
-        roleService.save(adminRole);*/
-
-
-        User userEnes = new User("enes","adada@hotmail.com",a);
-        userEnes.setConfirmPassword(a);
-        userEnes.addRole(userRole);
-   /*     userService.save(userEnes);*/
-        User userAdmin = new User("enes","1@hotmail.com",a);
-        userAdmin.setConfirmPassword(a);
-        userAdmin.addRoles(new HashSet<>(Arrays.asList(userRole,adminRole)));
-       /* userService.save(userAdmin);*/
-
-      //  FileSystemUtils.deleteRecursively(new File("src\\main\\resources\\static\\images"));
-      //  Files.createDirectory(Paths.get("src\\main\\resources\\static\\images"));
-
-       /* Movie movie = new Movie("title",1995,"dadadada adasda");
-        Movie movie2 = new Movie("movie2",1995,"dadadada da");
-        Movie movie3 = new Movie("movie3",1995,"dadadada da");
-        movie.addCast(enes);
-        movie.addCast(ahmet);
-        movie.addCast(zulfu);
-        movie.addCast(goksel);
-        movie.setCategory(korku);
-        movie2.setCategory(komedi);
-        movie3.setCategory(zalim);
-        movie.setLanguage(tr);
-        movie2.setLanguage(tr);
-        movie3.setLanguage(tr);
-        Collection collection = new Collection("collection 1");
-        collection.addMovie(movie);
-        collection.addMovie(movie2);
-        Collection collection2 = new Collection("collection 2");
-        collection2.addMovie(movie3);
-*/
-      /*  languageService.save(tr);
-        languageService.save(eng);
-        categoryService.save(zalim);
-        categoryService.save(komedi);
-        categoryService.save(korku);
-        castService.save(enes);
-        castService.save(ahmet);
-        castService.save(zulfu);
-        castService.save(goksel);
-        movieService.save(movie);
-        movieService.save(movie2);
-        movieService.save(movie3);
-        collection.addUser(userAdmin);
-        collection.addUser(userEnes);
-        collection2.addUser(userEnes);
-        collectionService.save(collection);
-        collectionService.save(collection2);*/
-
-
+        User user = new User("user","user@gmail.com",ab);
+        user.addRole(roleService.findByName("ROLE_USER"));
+        userService.save(user);*/
     }
 }

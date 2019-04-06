@@ -13,12 +13,6 @@ import java.util.Optional;
 @Repository
 public interface RoleRepository extends JpaRepository<Role,Long> {
 
-    @Query("select r from Role r")
-    List<Role> getAll();
-
-    @Override
-    Optional<Role> findById(Long id);
-
     Optional<Role> findByName(String name);
     void deleteById(Long id);
 }

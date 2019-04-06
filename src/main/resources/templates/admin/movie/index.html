@@ -25,12 +25,7 @@
                             <tbody>
                             <tr th:each="movie : ${movies}">
                                 <td>
-                                    <form enctype="multipart/form-data" th:action="@{/admin/image/save(movieId=${movie.id})}" method="post" th:if="${movie.image}== null">
-                                        <input type="file" name="imageFile" id="fileUpload">
-                                        <input type="submit" value="upload" id="btnUpload">
-                                    </form>
-
-                                    <img th:if="${movie.image}!= null" th:src="@{'/images/' + ${movie.image.name}}" width="150">
+                                    <img th:if="${movie.imageName}!= null" th:src="@{'/movieImage/' + ${movie.imageName}}" width="150">
                                 </td>
                                 <td th:text="${movie.name}" class="align-middle">name</td>
                                 <td th:text="${#dates.format(movie.publishYear, 'dd-MMM-yyyy')}" class="align-middle"></td>

@@ -1,9 +1,7 @@
 package com.enes.intern.controller.admin;
 
-import com.enes.intern.model.Cast;
 import com.enes.intern.model.Category;
 import com.enes.intern.model.Movie;
-import com.enes.intern.service.CastService;
 import com.enes.intern.service.CategoryService;
 import com.enes.intern.service.MovieService;
 import org.springframework.stereotype.Controller;
@@ -38,7 +36,7 @@ public class CategoryController {
 
     @GetMapping(path = {"/",""})
     public String home(Model model){
-        model.addAttribute("categories",categoryService.getAll());
+        model.addAttribute("categories",categoryService.findAll());
         return "admin/category/index";
     }
 

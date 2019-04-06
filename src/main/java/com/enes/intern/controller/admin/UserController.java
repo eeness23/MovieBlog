@@ -1,16 +1,11 @@
 package com.enes.intern.controller.admin;
 
 import com.enes.intern.model.User;
-import com.enes.intern.repository.UserRepository;
 import com.enes.intern.service.RoleService;
 import com.enes.intern.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/admin/user")
@@ -26,14 +21,14 @@ public class UserController {
 
     @GetMapping(path = {"","/"})
      public String showUsers(Model model){
-       model.addAttribute("users",userService.getAll());
+       model.addAttribute("users",userService.findAll());
        return "admin/user/index";
     }
     @GetMapping("/{id}/edit")
 
-    public String editUser(@PathVariable("id") long id , Model model){
+    public String editUser(@PathVariable("id") Long id , Model model){
         model.addAttribute("user",userService.findById(id));
-        model.addAttribute("multiCheckboxSelectedValues" , roleService.getAll());
+        model.addAttribute("multiCheckboxSelectedValues" , roleService.findAll());
         return "admin/user/edit";
     }
 

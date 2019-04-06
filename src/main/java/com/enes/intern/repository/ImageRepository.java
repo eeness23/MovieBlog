@@ -7,4 +7,8 @@ public interface ImageRepository extends JpaRepository<Image,Long> {
      Image findByName(String name);
 
      boolean existsByName(String name);
+
+     Image findImageByMovieId(Long id);
+
+     void deleteByMovieId(Long id);
 }

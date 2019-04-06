@@ -39,7 +39,7 @@ public class LanguageController {
 
     @GetMapping(path = {"/",""})
     public String home(Model model){
-        model.addAttribute("langs",languageService.getAll());
+        model.addAttribute("langs",languageService.findAll());
         return "admin/language/index";
     }
 

@@ -9,23 +9,23 @@
         <div class="col-12 mt-5">
             <div class="card">
 
-                    <img  th:src="@{'/images/' + ${movie.image.name}}" th:width="150" class="rounded mx-auto d-block"
+                    <img  th:src="@{'/movieImage/' + ${movie.imageName}}" th:width="150" class="rounded mx-auto d-block"
                           style="margin-top: 10px;margin-bottom: -10px;">
 
                 <div class="card-body" th:object="${movie}">
                     <div class="form-group">
                         <label for="example-title-input" class="col-form-label">Title</label>
-                        <input class="form-control" type="text" id="example-title-input" th:field="*{name}" readonly/>
+                        <p class="form-control" type="text" id="example-title-input" th:text="*{name}" />
                     </div>
 
                     <div class="form-group">
                         <label for="example-date-input" class="col-form-label">Publish Year</label>
-                        <input type="text" id="example-date-input" class="form-control" th:value="${#dates.format(movie.publishYear, 'yyyy-MM-dd')}" readonly />
+                        <p  id="example-date-input" class="form-control" th:text="${#dates.format(movie.publishYear, 'yyyy-MM-dd')}"  />
                     </div>
 
                     <div class="form-group">
                         <label for="example-date-input2" class="col-form-label">Language</label>
-                        <input type="text" id="example-date-input2" class="form-control" th:field="*{language.name}" readonly />
+                        <p id="example-date-input2" class="form-control" th:text="*{language.name}"  />
                     </div>
 
                     <div class="form-group">
@@ -48,7 +48,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">Description</span>
                         </div>
-                        <textarea class="form-control" rows="7" aria-label="With textarea" th:field="*{description}" readonly></textarea>
+                        <p class="form-control" rows="7" aria-label="With textarea" th:text="*{description}"></p>
                     </div>
 
                     <div class="btn-group mb-xl-3 pull-right" role="group" aria-label="Basic example">

@@ -94,7 +94,7 @@ ul#myTab {
 	vertical-align: middle;
 }
 .tab-content p {
-    line-height: 2.2em;
+    line-height: 1em;
     font-size: 14px;
 	    color: #777;
 }
@@ -247,36 +247,6 @@ i.glyphicon.glyphicon-play-circle {
 }
 .w3l-movie-gride-agile img:hover {
     opacity: 0.5;
-}
-.ribben {
-  position: absolute;
-    top: 3%;
-    left: 4%;
-    padding: 20px 0 0 0;
-    background: #ff8d1b;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-	-webkit- border-radius: 50%;
-	-0- border-radius: 50%;
-	-moz- border-radius: 50%;
-}
-.ribben p {
-    font-size:0.9em;
-    color: #fff;
-	line-height: 0;
-}
-.ribben:after {
-    content: '';
-    position: absolute;
-    top: 86%;
-    right: 18%;
-    width: 0;
-    height: 0;
-    border-top: 8px solid #ff8d1b;
-    border-right: 5px solid transparent;
-    border-left: 5px solid transparent;
-    transform: rotate(85deg);
 }
 /*--//w3l-movies-grids--*/
 /*--w3l-latest-movies-grids--*/

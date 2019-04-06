@@ -1,5 +1,6 @@
 package com.enes.intern.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;

@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public class CollectionService {
-    private CollectionRepository collectionRepository;
+    private final CollectionRepository collectionRepository;
 
     public CollectionService(CollectionRepository collectionRepository) {
         this.collectionRepository = collectionRepository;
@@ -17,8 +17,15 @@ public class CollectionService {
 
     public Collection save(Collection collection){ return collectionRepository.save(collection);}
 
-    public List<Collection> getAll(){return collectionRepository.getAll();}
+    public List<Collection> findAll(){return collectionRepository.findAll();}
 
     public Collection findById(Long id){return collectionRepository.findById(id).get();}
     public void deleteById(Long id){collectionRepository.deleteById(id);}
+
+    public List<Collection> getCollectionByUserId(Long id){
+        return collectionRepository.getCollectionByUserId(id);
+    }
+    public List<Collection> getCollectionByMovieId(Long id){
+        return collectionRepository.getCollectionByMovieId(id);
+    }
 }

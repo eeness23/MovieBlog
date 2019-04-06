@@ -1,11 +1,7 @@
 package com.enes.intern.controller.admin;
 
-import com.enes.intern.model.Cast;
-import com.enes.intern.model.Movie;
 import com.enes.intern.model.Role;
 import com.enes.intern.model.User;
-import com.enes.intern.service.CastService;
-import com.enes.intern.service.MovieService;
 import com.enes.intern.service.RoleService;
 import com.enes.intern.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -13,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 
 @Controller
@@ -42,7 +37,7 @@ public class RoleController {
 
     @GetMapping(path = {"/",""})
     public String home(Model model){
-        model.addAttribute("roles",roleService.getAll());
+        model.addAttribute("roles",roleService.findAll());
         return "admin/role/index";
     }
 

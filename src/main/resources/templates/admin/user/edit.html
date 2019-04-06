@@ -1,11 +1,11 @@
 
 <html xmlns:th="http://www.thymeleaf.org">
-<div th:replace="~{admin/shared/head :: head}"></div>
+<div th:replace="~{admin/shared/head :: head(title='User Edit')}"></div>
 <body>
 <div class="page-container">
     <div th:replace="~{admin/shared/sidebar :: sidebar}"></div>
     <div class="main-content">
-        <div th:replace="~{admin/shared/container :: header(title='Edit')}"></div>
+        <div th:replace="~{admin/shared/container :: header(title='User Edit')}"></div>
         <div class="col-12 mt-5">
             <form class="card" method="post" th:object="${user}" th:action="@{/admin/user/save}" >
                 <div class="card-body">

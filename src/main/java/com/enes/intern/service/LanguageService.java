@@ -20,7 +20,7 @@ public class LanguageService {
         return languageRepository.save(language);
     }
 
-    public List<Language> getAll(){return languageRepository.getAll();}
+    public List<Language> findAll(){return languageRepository.findAll();}
 
     public Language findById(Long id){return languageRepository.findById(id).get();}
     public Language findByName(String name){

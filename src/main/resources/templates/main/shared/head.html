@@ -10,27 +10,28 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
 	function hideURLbar(){ window.scrollTo(0,1); } </script>
 	<!-- //for-mobile-apps -->
-	<link th:href="@{main/css/bootstrap.css}" rel="stylesheet" type="text/css" media="all" />
-	<link th:href="@{main/css/style.css}" rel="stylesheet" type="text/css" media="all" />
-	<link rel="stylesheet" th:href="@{main/css/contactstyle.css}" type="text/css" media="all" />
+	<link th:href="@{/main/css/bootstrap.css}" rel="stylesheet" type="text/css" media="all" />
+	<link th:href="@{/main/css/special.css}" rel="stylesheet" type="text/css" />
+	<link th:href="@{/main/css/style.css}" rel="stylesheet" type="text/css" media="all" />
+	<link rel="stylesheet" th:href="@{/main/css/contactstyle.css}" type="text/css" media="all" />
 	<link rel="stylesheet" th:href="@{main/css/faqstyle.css}" type="text/css" media="all" />
-	<link th:href="@{main/css/single.css}" rel='stylesheet' type='text/css' />
-	<link th:href="@{main/css/medile.css}" rel='stylesheet' type='text/css' />
+	<link th:href="@{/main/css/single.css}" rel='stylesheet' type='text/css' />
+	<link th:href="@{/main/css/medile.css}" rel='stylesheet' type='text/css' />
 	<!-- banner-slider -->
-	<link th:href="@{main/css/jquery.slidey.min.css}" rel="stylesheet">
+	<link th:href="@{/main/css/jquery.slidey.min.css}" rel="stylesheet">
 	<!-- //banner-slider -->
 	<!-- pop-up -->
-	<link th:href="@{main/css/popuo-box.css}" rel="stylesheet" type="text/css" media="all" />
+	<link th:href="@{/main/css/popuo-box.css}" rel="stylesheet" type="text/css" media="all" />
 	<!-- //pop-up -->
 	<!-- font-awesome icons -->
-	<link rel="stylesheet" th:href="@{main/css/font-awesome.min.css}" />
+	<link rel="stylesheet" th:href="@{/main/css/font-awesome.min.css}" />
 	<!-- //font-awesome icons -->
 	<!-- js -->
-	<script type="text/javascript" th:src="@{main/js/jquery-2.1.4.min.js}"></script>
+	<script type="text/javascript" th:src="@{/main/js/jquery-2.1.4.min.js}"></script>
 	<!-- //js -->
 	<!-- banner-bottom-plugin -->
-	<link th:href="@{main/css/owl.carousel.css}" rel="stylesheet" type="text/css" media="all">
-	<script th:src="@{main/js/owl.carousel.js}"></script>
+	<link th:href="@{/main/css/owl.carousel.css}" rel="stylesheet" type="text/css" media="all">
+	<script th:src="@{/main/js/owl.carousel.js}"></script>
 	<script>
 		$(document).ready(function() {
 			$("#owl-demo").owlCarousel({
@@ -48,8 +49,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<!-- //banner-bottom-plugin -->
 	<link href='//fonts.googleapis.com/css?family=Roboto+Condensed:400,700italic,700,400italic,300italic,300' rel='stylesheet' type='text/css'>
 	<!-- start-smoth-scrolling -->
-	<script type="text/javascript" th:src="@{main/js/move-top.js}"></script>
-	<script type="text/javascript" th:src="@{main/js/easing.js}"></script>
+	<script type="text/javascript" th:src="@{/main/js/move-top.js}"></script>
+	<script type="text/javascript" th:src="@{/main/js/easing.js}"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+	<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+
 	<script type="text/javascript">
 		jQuery(document).ready(function($) {
 			$(".scroll").click(function(event){
@@ -60,7 +65,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	</script>
 	<!-- start-smoth-scrolling -->
 
-	<script th:src="@{main/js/bootstrap.min.js}"></script>
+	<script th:src="@{/main/js/bootstrap.min.js}"></script>
 	<script>
 		$(document).ready(function(){
 			$(".dropdown").hover(

@@ -30,7 +30,7 @@ public class CollectionController {
 
     @GetMapping(path = {"/", ""})
     public String home(Model model) {
-        model.addAttribute("collections", collectionService.getAll());
+        model.addAttribute("collections", collectionService.findAll());
         return "admin/collection/index";
     }
 

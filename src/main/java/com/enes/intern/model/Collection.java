@@ -1,5 +1,8 @@
 package com.enes.intern.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -28,6 +31,7 @@ public class Collection {
             joinColumns = @JoinColumn(name = "collection_id",referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "user_id",referencedColumnName = "id")
     )
+    @JsonManagedReference
     private Set<User> users;
 
     @ManyToMany
@@ -36,6 +40,7 @@ public class Collection {
             joinColumns = @JoinColumn(name = "collection_id"),
             inverseJoinColumns = @JoinColumn(name = "movie_id")
     )
+    @JsonManagedReference
     private Set<Movie> movies;
 
     public void addMovie(Movie movie){

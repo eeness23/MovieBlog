@@ -10,11 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface LanguageRepository extends JpaRepository<Language,Long> {
-    @Query("select l from Language l")
-    List<Language> getAll();
-
-
-    Optional<Language> findById(Long id);
     Optional<Language> findByName(String name);
     void deleteById(Long id);
 }

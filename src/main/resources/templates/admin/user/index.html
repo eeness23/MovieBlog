@@ -1,11 +1,11 @@
 
 <html xmlns:th="http://www.thymeleaf.org">
-<div th:replace="~{admin/shared/head :: head}"></div>
+<div th:replace="~{admin/shared/head :: head(title='Users')}"></div>
 <body>
 <div class="page-container">
     <div th:replace="~{admin/shared/sidebar :: sidebar}"></div>
     <div class="main-content">
-        <div th:replace="~{admin/shared/container :: header(title='Üyeler')}"></div>
+        <div th:replace="~{admin/shared/container :: header(title='Users')}"></div>
         <div class="col-lg-11 mt-5">
         <div class="card">
             <div class="card-body">
@@ -26,11 +26,10 @@
                                 <th scope="row" th:text="${user.name}">1</th>
                                 <td th:text="${user.email}">Mark</td>
                                 <td><span th:each="role : ${user.roles}" th:text="| ${role.name} |"></span></td>
-<!--
                                 <td >
                                     <span th:if="!${user.collections.isEmpty()}">
                                          <span th:each="collection : ${user.collections}">
-                                              <span th:text="${collection.name}">title</span>
+                                            <a th:href="@{'/admin/collection/'+${collection.id}+'/edit'}" th:text="${collection.name}"></a>
                                          </span>
                                     </span>
 
@@ -38,7 +37,7 @@
                                          <span >   There is no collection
                                          </span>
                                     </span>
-                                </td>-->
+                                </td>
                                 <td><a  th:href="@{'/admin/user/'+${user.id}+'/edit'}"><i class="fa fa-edit"></i></a>
                                     <a th:href="@{/admin/user/delete(userId=${user.id})}"
                                                   onclick="if (!(confirm('Are you sure you want to delete this user'))) return false">

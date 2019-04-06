@@ -1,5 +1,8 @@
 package com.enes.intern.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -36,9 +39,11 @@ public class User implements UserDetails {
 
     @Column(length = 200)
     @NonNull
+    @JsonIgnore
     private String password;
 
     @Transient
+    @JsonIgnore
     private String confirmPassword;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -47,10 +52,12 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
+    @JsonIgnore
     private Set<Role> roles = new HashSet<>();
 
 
-    @ManyToMany(mappedBy = "users")
+    @ManyToMany(mappedBy = "users",fetch = FetchType.EAGER)
+    @JsonBackReference
     private Set<Collection> collections;
 
 

@@ -18,7 +18,12 @@ public class Image {
     @NonNull
     private String name;
 
-    @OneToOne(mappedBy = "image")
+    private String modifiedFileName;
+
+    private String fileExtension;
+
+    @OneToOne
+    @JoinColumn(name = "movie_id")
     private Movie movie;
 
 }

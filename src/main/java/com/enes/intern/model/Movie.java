@@ -1,7 +1,11 @@
 package com.enes.intern.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import javax.persistence.*;
@@ -17,6 +21,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Getter
 @Setter
+
 public class Movie {
 
     @Id
@@ -34,8 +39,10 @@ public class Movie {
     @Lob
     private String description;
 
-    @OneToOne
-    private Image image;
+    @Transient
+    private MultipartFile image;
+
+    private String imageName;
 
     @ManyToMany
     @JoinTable(
@@ -43,6 +50,8 @@ public class Movie {
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "cast_id")
     )
+
+    @JsonIgnore
     private Set<Cast> casts;
 
     @ManyToMany
@@ -51,12 +60,16 @@ public class Movie {
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
+
+    @JsonIgnore
     private Set<Category> categories;
 
-    @ManyToMany(mappedBy = "movies")
+    @ManyToMany(mappedBy = "movies",fetch = FetchType.EAGER)
+    @JsonBackReference
     private Set<Collection> collections;
 
     @ManyToOne
+    @JsonIgnore
     private Language language;
 
     public void addCast(Cast cast){
