@@ -1,0 +1,68 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{main/shared/head :: head}"></div>
+<body>
+<div th:replace="~{main/shared/header :: header}"></div>
+<div th:replace="~{main/shared/navbar :: navbar(categories=${categories})}"></div>
+
+<div class="general">
+    <h4 class="latest-text w3_latest_text" style="display: inline-block">Collection Edit</h4>
+    <div class="container">
+        <form method="post" th:object="${collection}" th:action="@{/collection/save}" style="text-align: center">
+            <input type="hidden" th:field="*{id}">
+            <div>
+                <label for="example-title-input" class="col-form-label x">Collection Name : </label>
+                <input class="form-control x" type="text" id="example-title-input" th:field="*{name}" required>
+                <input class="btn btn-success"  type="submit" value="Save">
+            </div>
+            <div style="display: inline-block" th:each="movie : ${movies}">
+                <label class="image-checkbox">
+                    <img th:src="@{'/movieImage/'+${movie.imageName}}" height="300" width="200"/>
+                    <input type="checkbox" th:field="${collection.movies}" th:value="${movie.id}"/>
+                    <i class="glyphicon glyphicon-ok hidden"></i>
+                </label>
+                <div class="mid-1 agileits_w3layouts_mid_1_home" style="width: 100%">
+                    <div class="w3l-movie-text">
+                        <h6><a th:href="@{'/movie/'+${movie.id}}" th:text="${movie.name}"></a></h6>
+                    </div>
+                    <div>
+                        <p th:text="${#dates.format(movie.publishYear, 'dd-MMM-yyyy')}"></p>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div th:replace="~{main/shared/footer :: footer}"></div>
+
+</body>
+<script>
+    // add/remove checked class
+    $(".image-checkbox").each(function () {
+        if ($(this).find('input[type="checkbox"]').first().attr("checked")) {
+            $(this).addClass('image-checkbox-checked');
+        } else {
+            $(this).removeClass('image-checkbox-checked');
+        }
+    });
+
+    // sync the input state
+    $(".image-checkbox").on("click", function (e) {
+        $(this).toggleClass('image-checkbox-checked');
+        var $checkbox = $(this).find('input[type="checkbox"]');
+        $checkbox.prop("checked", !$checkbox.prop("checked"));
+
+        e.preventDefault();
+    });
+</script>
+<style>
+    .form-control {
+        width: 25%;
+        margin-bottom: 15px;
+    }
+
+    .x {
+        display: inline-block;
+    }
+</style>
+</html>

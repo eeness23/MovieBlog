@@ -1,0 +1,64 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{main/shared/head :: head}"></div>
+<body>
+<div th:replace="~{main/shared/header :: header}"></div>
+<div th:replace="~{main/shared/navbar :: navbar(categories=${categories})}"></div>
+
+<div class="general">
+    <h4 class="latest-text w3_latest_text" style="display: inline-block"
+        th:text="${changeTitle}?'Collections':${user.name}">Featured Movies</h4>
+    <div class="container">
+        <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+            <div id="myTabContent" class="tab-content">
+                <div role="tabpanel" class="tab-pane fade active in" id="home" aria-labelledby="home-tab">
+                    <div class="w3_agile_featured_movies">
+                        <div class="col-md-2 w3l-movie-gride-agile" style="width: 20%"
+                             th:each="collection : ${collections}">
+                            <a th:href="@{'/collections/'+${collection.id}}" class="hvr-shutter-out-horizontal">
+                                <th:block th:if="${collection.getMovies().size()>0}">
+                                    <img th:src="@{'/movieImage/'+${collection.movies.iterator().next().imageName}}"
+                                         height="300px" width="200px"/>
+                                </th:block>
+                                <th:block th:if="${collection.getMovies().size()<=0}">
+                                    <img src="https://cdn-01.media-brady.com/store/stuk/media/catalog/product/cache/3/thumbnail/85e4522595efc69f496374d01ef2bf13/1534987296/d/m/dmeu_sr055_1_std.lang.all.gif" height="300px" width="200px"/>
+                                </th:block>
+
+                              </a>
+                            <div class="mid-1 agileits_w3layouts_mid_1_home" style="width: 100%">
+                                <div class="w3l-movie-text">
+                                    <h6><a th:href="@{'/collections/'+${collection.id}}"
+                                           th:text="${collection.name}"></a></h6>
+                                </div>
+                                <div th:if="${changeTitle}">
+                                    <p>Created By <a
+                                            th:href="@{'/user/'+${collection.users.iterator().next().id}+'/collections'}"
+                                            th:text="${collection.users.iterator().next().name}"></a></p>
+                                </div>
+                                <div style="float: right" th:if="${collection.users.iterator().next().id}==${userId}">
+                                    <a th:href="@{'/user/'+${user.id}+'/collections/'+${collection.id}+'/edit'}">
+                                        <img
+                                            src="https://cdn4.iconfinder.com/data/icons/web-ui-color/128/Edit-512.png"
+                                            width="27px">
+                                    </a>
+                                    <a th:href="@{'/user/'+${user.id}+'/collections/'+${collection.id}+'/delete'}"
+                                       onclick="if (!(confirm('Are you sure you want to delete this collection'))) return false">
+                                        <img
+                                                src="https://cdn1.iconfinder.com/data/icons/round-ui/123/47-512.png"
+                                                width="30px">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{main/shared/footer :: footer}"></div>
+
+
+</body>
+</html>

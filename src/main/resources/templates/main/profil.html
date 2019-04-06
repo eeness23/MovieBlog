@@ -1,0 +1,64 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{main/shared/head :: head}"></div>
+<body>
+<div th:replace="~{main/shared/header :: header}"></div>
+<div th:replace="~{main/shared/navbar :: navbar(categories=${categories})}"></div>
+<br>
+<div class="container">
+    <div class="row profile">
+        <div class="col-md-3">
+            <div class="profile-sidebar">
+                <div class="profile-usertitle">
+                    <div class="profile-usertitle-name" style="text-align: center" th:text="${user.name.toUpperCase()}">
+                        Marcus Doe
+                    </div>
+                </div>
+                <!-- SIDEBAR MENU -->
+                <div class="profile-usermenu">
+                    <ul class="nav">
+                        <li class="active">
+                            <a th:href="@{/profil}">
+                                <i class="glyphicon glyphicon-home"></i>
+                                Information </a>
+                        </li>
+                        <li>
+                            <a th:href="@{'/user/'+${user.id}+'/collections'}">
+                                <i class="glyphicon glyphicon-user"></i>
+                                Collections </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- END MENU -->
+            </div>
+        </div>
+        <div class="col-md-9" >
+            <div class="profile-content">
+                <div class="card">
+                    <div class="card-body" th:object="${user}">
+                        <div class="form-group">
+                            <label for="example-title-input" class="col-form-label" style="display: inline-block">Full Name : </label>
+                            <p class="form-control" type="text" id="example-title-input" style="display: inline-block;width: auto" th:text="*{name}" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="example-date-input2" class="col-form-label" style="display: inline-block">Email : </label>
+                            <p id="example-date-input2" class="form-control" th:text="*{email}"  style="display: inline-block;width: auto"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-form-label" style="display: inline-block" >Roles : </label>
+
+                                <th:block th:each="role: ${user.roles}">
+                                    <label class="form-control" style="display: inline-block;margin-right: 5px;width: auto" th:text="${role.name.substring(5)}"></label>
+                                </th:block>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

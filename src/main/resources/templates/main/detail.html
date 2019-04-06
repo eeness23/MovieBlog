@@ -1,0 +1,171 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{main/shared/head :: head}"></div>
+<body>
+<div th:replace="~{main/shared/header :: header}"></div>
+<div th:replace="~{main/shared/navbar :: navbar(categories=${categories})}"></div>
+
+<div class="single-page-agile-main">
+    <div class="container-fluid">
+        <div class="col-sm-8">
+            <div class="song">
+                <div class="song-info">
+                    <h2 style="text-align: center;" th:text="${movie.name}">THE LEGEND OF TARZAN - Official
+                        Trailer 2</h2>
+                </div>
+                <div>
+                    <div style="text-align: center;">
+                        <img th:src="@{'/movieImage/'+${movie.imageName}}"
+                             style="width: 400px;text-align: center;" class="image-responsive">
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div>
+                <input type="hidden" id="btnCollection" th:value="${addCollection}?'1':'0'">
+                <input type="hidden" name="userId" th:if="${addCollection}" th:value="${user.id}">
+                <input type="hidden" name="movieId" th:value="${movie.id}">
+                <p th:text="${movie.description}">
+                    xxx
+                </p>
+                <br>
+                <dl class="row">
+                    <dt class="col-sm-3">Category :</dt>
+                    <dd class="col-sm-9">
+                        <div class="d-inline">
+                            <th:block th:each="category : ${movie.categories}">
+                                        <label th:text="| ${category.name} |">
+                                        </label>
+                            </th:block>
+                        </div>
+                    </dd>
+
+                    <dt class="col-sm-3">Publish year :</dt>
+                    <dd class="col-sm-9" th:text="${#dates.format(movie.publishYear, 'dd-MMM-yyyy')}"></dd>
+
+                    <dt class="col-sm-3">Language :</dt>
+                    <dd class="col-sm-9" th:text="${movie.language.name}"></dd>
+
+
+                    <dt class="col-sm-3">Casts :</dt>
+                    <dd class="col-sm-9">
+                        <div class="d-inline">
+                            <th:block th:each="cast : ${movie.casts}">
+                                        <label th:text="| ${cast.name} |">
+                                        </label>
+                            </th:block>
+                        </div>
+                    </dd>
+
+                </dl>
+                <button th:if="${addCollection}" type="button" class="btn btn-success btn-lg btn-block myModalClass">Add Collection</button>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="col-sm-4 border" style="background-color:#5e5e5e;padding: 10px;color:whitesmoke;text-align: center" >
+          <div>
+              <h3 style="margin: 10px">SOME COLLECTIONS OF THE MOVIE</h3>
+          </div>
+        <div style="display: inline-block" id="collectionsOfMovie">
+
+        </div>
+
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Collections</h5>
+                <h5 class="modal-title" id="exampleModal">Click on which collection you want to add.</h5>
+            </div>
+            <input type="hidden" name="movieId">
+            <div class="modal-body" th:each="collection : ${collections}" style="text-align: center">
+                <button class="btn btn-success" style="margin: 2px 2px 2px 2px" th:text="${collection.name}" name="btnAddCollection" th:value="${collection.id}"></button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Modal title</h4>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('document').ready(function () {
+
+        start($('input[name="movieId"]').val());
+
+        function start(x) {
+            console.log(x)
+            $.ajax({
+                url: '/api/collections',
+                dataType: 'json',
+                methot: 'GET',
+                data: {
+                    movieId: x
+                }
+            }).done(output).error(output)
+        }
+
+        function output(data) {
+            var text = "";
+           $.each(data,function (v,k) {
+             text+='            <div class="w3l-movie-gride-agile" style="float:left;width: 128px;margin: 5px">\n' +
+                 '                <a href="/collections/'+k.id+'" class="hvr-shutter-out-horizontal">\n' +
+                 '                    <img src="/movieImage/'+k.movies[0].imageName+'" class="img-thumbnail"/>\n' +
+                 '                </a>\n' +
+                 '                <div class="mid-1 agileits_w3layouts_mid_1_home">\n' +
+                 '                    <div class="w3l-movie-text">\n' +
+                 '                        <h6><a href="/collections/'+k.id+'" ></a>'+k.name+'</h6>\n' +
+                 '                    </div>\n' +
+                 '                    <div>\n' +
+                 '                        <p>Created By <a href="/user/'+k.users[0].id+'/collections" >'+k.users[0].name+'</a></p>\n' +
+                 '                    </div>\n' +
+                 '                </div>\n' +
+                 '            </div>'
+           })
+            $('#collectionsOfMovie').html(text);
+        }
+
+        $('.myModalClass').click(function () {
+            $('#myModal').modal('show')
+        })
+
+        $('button[name="btnAddCollection"]').click(function () {
+            $.post("/api/collection/save", {
+                userId: $('input[name="userId"]').val(),
+                collectionId: this.value,
+                movieId: $('input[name="movieId"]').val()
+            }).done(function (data) {
+                $('#myModal').modal('hide')
+                $('#exampleModalLabel').text(data)
+                $('#infoModal').modal('show')
+                $('body').css('padding-right', '0px');
+                start($('input[name="movieId"]').val())
+            }).fail(function (data) {
+                $('#myModal').modal('hide')
+                $('#exampleModalLabel').text(data.responseText)
+                console.log(data)
+                $('#infoModal').modal('show')
+                $('body').css('padding-right', '0px');
+                start($('input[name="movieId"]').val())
+            })
+        })
+    });
+</script>
+<style>
+    body { padding-right: 0 !important }
+</style>
+</body>
+</html>

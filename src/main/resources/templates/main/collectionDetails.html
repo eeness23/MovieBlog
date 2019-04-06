@@ -1,0 +1,39 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{main/shared/head :: head}"></div>
+<body>
+<div th:replace="~{main/shared/header :: header}"></div>
+<div th:replace="~{main/shared/navbar :: navbar(categories=${categories})}"></div>
+
+<div class="general" th:object="${collection}">
+    <h4 class="latest-text w3_latest_text" style="display: inline-block" th:text="*{name}">Featured Movies</h4>
+    <h3 style="display: inline-block;float: right;margin: 15px 125px 0px 0px;" th:text="| Created by ${collection.users.iterator().next().name}|"></h3>
+    <div class="container">
+        <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+            <div id="myTabContent" class="tab-content">
+                <div role="tabpanel" class="tab-pane fade active in" id="home" aria-labelledby="home-tab">
+                    <div class="w3_agile_featured_movies">
+                        <div class="col-md-2 w3l-movie-gride-agile" style="width: 20%" th:each="movie : ${collection.movies}">
+                            <a th:href="@{'/movie/'+${movie.id}}" class="hvr-shutter-out-horizontal">
+                                <img th:src="@{'/movieImage/'+${movie.imageName}}" height="300px" width="200px"/></a>
+                            <div class="mid-1 agileits_w3layouts_mid_1_home" style="width: 100%">
+                                <div class="w3l-movie-text">
+                                    <h6><a th:href="@{'/movie/'+${movie.id}}" th:text="${movie.name}"></a></h6>
+                                </div>
+                                <div>
+                                    <p th:text="${#dates.format(movie.publishYear, 'dd-MMM-yyyy')}"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{main/shared/footer :: footer}"></div>
+
+
+</body>
+</html>

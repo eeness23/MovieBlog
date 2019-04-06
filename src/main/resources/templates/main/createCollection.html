@@ -1,0 +1,40 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{main/shared/head :: head}"></div>
+<body>
+<div th:replace="~{main/shared/header :: header}"></div>
+<div th:replace="~{main/shared/navbar :: navbar(categories=${categories})}"></div>
+
+<div class="general">
+    <h4 class="latest-text w3_latest_text">Create Collection</h4>
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <form method="post" th:object="${collection}" th:action="@{/collection/save}">
+                    <div class="form-group" style="text-align: center">
+                        <label for="example-title-input" class="col-form-label x" >Collection Name : </label>
+                        <input class="form-control x" type="text" id="example-title-input" th:field="*{name}" required >
+                        <br>
+                        <input class="btn btn-success" style="float: right" type="submit" value="Save and Select Movies">
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{main/shared/footer :: footer}"></div>
+
+<script>
+</script>
+
+<style>
+    .form-control{
+        width: 25%;
+    }
+    .x{
+        display: inline-block;
+    }
+</style>
+</body>
+</html>
