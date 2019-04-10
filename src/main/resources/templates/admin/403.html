@@ -1,0 +1,22 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{admin/shared/head :: head(title='403')}"></div>
+<body>
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+    <!-- preloader area end -->
+    <!-- error area start -->
+    <div class="error-area ptb--100 text-center">
+        <div class="container">
+            <div class="error-content">
+                <h2>403</h2>
+                <p th:text="|Hi ${userName}, You do not have permission to access this page|"></p>
+                <a th:href="@{/login}">Back to Login Page</a>
+            </div>
+        </div>
+    </div>
+    <div th:replace="~{admin/shared/footer :: footer}"></div>
+    <div th:replace="~{admin/shared/javascripts :: js}"></div>
+</body>
+</html>
