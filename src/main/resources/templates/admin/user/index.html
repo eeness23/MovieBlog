@@ -28,7 +28,7 @@
                                 <td><span th:each="role : ${user.roles}" th:text="| ${role.name} |"></span></td>
                                 <td >
                                     <span th:if="!${user.collections.isEmpty()}">
-                                         <span th:each="collection : ${user.collections}">
+                                         <span class="form-control" style="width: auto;display: inline-block;padding: 5px;margin-right: 2px" th:each="collection : ${user.collections}">
                                             <a th:href="@{'/admin/collection/'+${collection.id}+'/edit'}" th:text="${collection.name}"></a>
                                          </span>
                                     </span>
@@ -56,5 +56,10 @@
     <div th:replace="~{admin/shared/footer :: footer}"></div>
     <div th:replace="~{admin/shared/javascripts :: js}"></div>
 </div>
+<style>
+    #changeColor:hover{
+        color: red;
+    }
+</style>
 </body>
 </html>

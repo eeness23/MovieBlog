@@ -20,13 +20,23 @@ Film Koleksiyon Sitesi - Spring Boot
 
 ### Yükleme
 
-Veritabanı olarak Mysql kullanıldığı icin öncelikle "movieblog" adında ve şifresi "root" olan bir veri tabanı oluşturuyoruz.
+Veritabanı olarak Mysql kullanıldığı icin öncelikle "movieblog" adında bir veritabanı oluşturmanız gereklidir. Kullanıcı adı ve şifresi movie ayarlanmıştır.Aşağıdaki kodları yazarak, veritabanı icin gerekli olan düzeni yapmış olursunuz.
+```
+mysql -u root -p
+Enter password:
+
+mysql> CREATE DATABASE IF NOT EXISTS movieblog CHARACTER SET utf8mb4 COLLATE utf8mb4_turkish_ci;
+mysql> CREATE USER 'movie'@'localhost' IDENTIFIED BY 'movie';
+mysql> Grant all on movieblog.* to 'movie'@'localhost';
+mysql> flush privileges;
+
+```
 Daha sonra "Dump20190410.sql" movieblog'un icine import ediyoruz.Böylelikle veritabanımızı artık kullanabiliriz.
-Veritabanı ismini ve şifresini değiştirmek isterseniz.Öncelikle "application.properties" icerisinden asagidaki kodları, kendinize göre degiştiriniz.
+Eğer kendi kullanıcınızı kullanmak isterseniz, MUTLAKA "application.properties" icerisinden username,password değiştiriniz.
 ```
 spring.datasource.url= jdbc url giriniz default ( jdbc:mysql://127.0.0.1:3306/movieblog?allowPublicKeyRetrieval=true&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC )
-spring.datasource.username= veritabanı kullanıcı adı default ( movieblog )
-spring.datasource.password=  veritabanı şifre adı default ( root )
+spring.datasource.username= veritabanı kullanıcı adı default ( movie )
+spring.datasource.password=  veritabanı şifre adı default ( movie )
 ```
 Eğer port cakışması algılanırsa yine "application.properties" dosyasının icinden aşağıdaki kodu, kendinize uygun doldurunuz.
 ```

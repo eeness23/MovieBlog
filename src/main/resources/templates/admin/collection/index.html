@@ -10,7 +10,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="single-table">
-                    <div class="table-responsive">
+                    <div class="table-responsive" style="text-align: center">
                         <table class="table text-center">
                             <thead class="text-uppercase bg-primary">
                             <tr class="text-white">
@@ -24,7 +24,7 @@
                             <tr th:each="collection : ${collections}">
                                 <th scope="row" th:text="${collection.name}">1</th>
                                 <td><span th:each="user : ${collection.users}" th:text="| ${user.email} |"></span></td>
-                                <td><span th:each="movie : ${collection.movies}" th:text="| ${movie.name} |"></span></td>
+                                <td><span class="form-control" style="width: auto;display: inline-block;padding: 5px;margin: 2px" th:each="movie : ${collection.movies}" th:text="| ${movie.name} |"></span></td>
 
                                 <td><a  th:href="@{'/admin/collection/'+${collection.id}+'/edit'}"><i class="fa fa-edit"></i></a>
                                     <a th:href="@{/admin/collection/delete(collectionId=${collection.id})}"
