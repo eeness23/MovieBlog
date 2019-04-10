@@ -32,13 +32,13 @@ public class UserCollectionController {
         if(authentication!=null && authentication.isAuthenticated()){
             User user = (User) authentication.getPrincipal();
             model.addAttribute("userId",user.getId());
-            model.addAttribute("user",user);
+            model.addAttribute("userName",user.getName());
         }else {
             model.addAttribute("userId",0);
         }
+        model.addAttribute("changeTitle",false);
         model.addAttribute("categories",categoryService.findAll());
         model.addAttribute("collections",collectionService.findAll());
-        model.addAttribute("changeTitle",true);
         return "main/collection";
     }
 
@@ -51,17 +51,19 @@ public class UserCollectionController {
 
     @GetMapping("/user/{userid}/collections")
     public String getCollectionsByUserID(@PathVariable("userid") Long userId,Model model,Authentication authentication){
+        User user = userService.findById(userId);
        if(authentication!=null && authentication.isAuthenticated()){
-           User user = (User) authentication.getPrincipal();
-           model.addAttribute("user",user);
-           model.addAttribute("userId",user.getId());
+           model.addAttribute("userName",user.getName());
+
+           User authUser = (User) authentication.getPrincipal();
+           model.addAttribute("userId",authUser.getId());
        }else{
            model.addAttribute("userId",0);
+           model.addAttribute("userName",user.getName());
        }
-
+        model.addAttribute("changeTitle",true);
         model.addAttribute("categories",categoryService.findAll());
         model.addAttribute("collections",collectionService.getCollectionByUserId(userId));
-        model.addAttribute("changeTitle",false);
         return "main/collection";
     }
 

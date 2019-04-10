@@ -8,9 +8,8 @@ Film Koleksiyon Sitesi - Spring Boot
 <br>Admin Rolü : Tüm filmleri ve koleksiyonlar üzerinde düzenlemeler yapabilmektedir.
 <br>User Rolü : Sadece kendi koleksiyonlarını editleyebilmektedir.
 * Sitede iki tane sayfa vardır.Bir tanesi adminler icin diğeri her rolü icin.
-* Spring oauth 2.0 google üzerinden kayıt ve giriş islemleri yapabilmektedir.( Yazılmaktadır...)
 * Ana sayfada daha güzel bir görüntü icin sayfalama ( Pagination ) işlemleri AJAX ile yapılmıstır.
-* Sitedeki temalar "w3layouts" alınmıştır. Ama üzerinde oynamalar. Daha dinamik hale getirmek icin Javascript kodları yazılmıitır.
+* Sitedeki temalar "w3layouts" ve "Colorlib" dan alınıp üzerinde geliştirmeler ve daha dinamik hale getirmek icin Javascript kodları yazılmıştır.
 
 ### Gereksinimler
 
@@ -22,7 +21,7 @@ Film Koleksiyon Sitesi - Spring Boot
 ### Yükleme
 
 Veritabanı olarak Mysql kullanıldığı icin öncelikle "movieblog" adında ve şifresi "root" olan bir veri tabanı oluşturuyoruz.
-Daha sonra "Dump20190406.sql" movieblog'un icine import ediyoruz.Böylelikle veritabanımızı artık kullanabiliriz.
+Daha sonra "Dump20190410.sql" movieblog'un icine import ediyoruz.Böylelikle veritabanımızı artık kullanabiliriz.
 Veritabanı ismini ve şifresini değiştirmek isterseniz.Öncelikle "application.properties" icerisinden asagidaki kodları, kendinize göre degiştiriniz.
 ```
 spring.datasource.url= jdbc url giriniz default ( jdbc:mysql://127.0.0.1:3306/movieblog?allowPublicKeyRetrieval=true&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC )
@@ -54,9 +53,34 @@ Sitede bulucağınız gibi aşağıda bazılarını yazdım.
 /collections : Tüm kolleksiyonlar
 /user/4/collections : Sadece 4 no'lu kullanıcının kolleksiyonları
 
+/collection/new : Koleksiyon oluşturma.
 ...
 ```
-## Deployment process
+## Sitenin Calışma Mantığı 
+Öncelikle 2 farklı role kullanıcı vardır.
+
+```
+          Admin            |            User
+eposta : admin@gmail.com   |   eposta : enes@gmail.com
+şifre  : admin             |   şifre  : enes
+```
+<br>Öncelikle gecici oluşturduğum veritabanında, kullanıcıların koleksiyonu vardır.Bundan dolayı Home sayfasını actığımızda, direk koleksiyonlara film eklemek icin buton gelmektedir.
+<br> Yeni bir kullanıcı oluşturduğunuzda ise MUTLAKA bir koleksiyon oluşturmalısınız yoksa ekleme butonu aktif olmayacaktır.
+
+USER
+<br> User modunda otomatik Home sayfasına yönledirilecektir.Burada koleksiyonunuz daha önceden var ise ekleme butonları görünecektir. Yoksa koleksiyon oluşturmalısınız.
+<br> Koleksiyon oluştuduktan sonra, kendinize ait tüm koleksiyonları düzenleyip, silebilirsiniz.
+<br>
+<br>
+ADMIN
+<br>Admin modunda sisteme girdiğinizde otomatik admin sayfasına yönlendirileceksiniz.Burada istediğiniz herşeyi yapabilirsiniz.Tüm koleksiyonları SADECE bu site tarafında düzenleyip silebilirsiniz, Home tarafında yine sadece kendi oluşturduklarınızı düzenleyip, silebilirsiniz.
+<br>Film ekleme düzenleme işlemini sadace admin yapmaktadır.
+
+<br>
+KULLANICI GİRİŞİ YAPMADAN
+<br> Herhangi bir kullanıcıya girmeden siteye girerseniz.Sadece koleksiyonları, filmleri görebilirsiniz.Koleksiyon oluşturmak icin mutlaka üye veya giriş yapmanız gerekmektedir.
+
+## Yapılan Aşamalar
 
 İlk öncelikle admin sitesi yapıldı. Daha sonra ana site yapıldı. Ön tema hazır kullanığım icin ( zaman sorunundan dolayı) üzerinde bazı değişikler gercekleştirdim.
 <br>Öncelikle pagination işlemi yaptım. Daha sonra sayfalara tıklanınca sayfayı reflesh yaptığı icin AJAX kullanmaya karar verdim.
@@ -72,7 +96,7 @@ Sitede bulucağınız gibi aşağıda bazılarını yazdım.
 
 ![alt text](https://lh3.googleusercontent.com/bPNrgwUFvs6erLENB9ORY3u4CIcTTdXtsUYOI6EJ50Yhp_nyfi7AzX4nmO7yANWAQMiuElRVXTPBiF71-ejmFyE2U_0uf-YvqPG_y96NaSW6X6RpCNMyyRSG5wfnhVfERXDWrUUPHmuQoHChTqa3CfeWAydrw95DVYEUxrrR3_-PQkSE-_3YRGz6Lm5fI-NG7kkuGgccQIRKh5v_8oj3dZ61zouO5cOxHhbHwoD17Ng-DH_gHrL95kIsRRKKjoLYL0XhIM88fzCaOO0GHmRCwUfv8FmQZkt0zcbZYOEnD0AkQW0haK2XF1whmXDqrY13-4D1DHKqgaHv3Jp3ugR4ympG_gT8nxbThVU0xa5n9JqW0SK-0wlx5-fBGQJ0esdeAP4c1udwaqYJJtyMZ9JQGIZgO0_k_L7j2MDhQzVtYOFWjO0N3H4cRzngi0vVslKEcm1DCxRTD8wOU2JE46L4b3Evd8nx2eoBbc6SzmCfiDvnjvu8szPmo2-rw6VfmlLfo8keF1UWyasjxJcdZdFoybdtngIGsNVf7--CkEGcPQ5FEWhXam1vnSfrKnS_kUUOi4sw7veqjMua4odOmn87teeE96_bqtPChLkFQDnRs-hAOhc4LwbIx29f-YJJF5WxxAnei3BaZdn1zkRnmH9b-Fs0wiPsZOAG9Ere-MZ-qR0BLbAE9RZuQ7J5E0c7t6QtrKutTe1igQd_6KMw3jG--p8=w368-h356-no)
 
-Daha sonra güvenlik kısımlarını ve uyarılar, validation işlemler yazılmıştır.
+Daha sonra güvenlik kısımlarını ve uyarılar, validation ve sıralama işlemleri( Ada göre, Yapım Yılına göre) yapılmıştır.
 
 ## Built With
 
@@ -80,7 +104,6 @@ Daha sonra güvenlik kısımlarını ve uyarılar, validation işlemler yazılm�
 * [Spring Rest](https://spring.io/projects/spring-restdocs) - Rest Web Servisi
 * [Spring Security](https://spring.io/projects/spring-security) - Güvenlik ve Kullanıcı Rolleri icin kullanılmıştır
 * [Spring Data](https://spring.io/projects/spring-data) - JPA ve Veritabanları işlemleri icin kullanılmıştır
-* [Spring Social](https://projects.spring.io/spring-social/) - OAuth 2
 * [Thymeleaf](https://www.thymeleaf.org/) - Java template engine ( Java uygulamarında kullanılan bir tür önyüz yaratıcısı)
 * [Lombok](https://projectlombok.org/) - Entity'deki kod kalabalığını önlemek icin kullanıldı.( get set vb. yazmak zorunda değilsiniz)
 * [Maven](https://maven.apache.org/) - Dependency Management (Kütüphaneleri kolayca alabilmek icin kullanılan bir teknoloji)

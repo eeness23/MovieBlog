@@ -1,11 +1,8 @@
 package com.enes.intern.repository;
 
 import com.enes.intern.model.Movie;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,4 +17,12 @@ public interface MovieRepository extends JpaRepository<Movie,Long> {
     @Query(nativeQuery=true, value="SELECT *  FROM movie ORDER BY RAND() LIMIT 9")
     List<Movie> getRandomMovie();
 
+    @Query("select m from Movie m where name like %?1%")
+    List<Movie> getMoviesBySearchName(String name);
+
+    @Query("select c.movies from Cast c where name like %?1%")
+    List<Movie> getCastMoviesBySearchName(String name);
+
+    @Query("select c.movies from Cast c where c.id= ?1")
+    List<Movie> getMoviesByCastId(Long id);
 }

@@ -7,8 +7,18 @@
 <div th:replace="~{main/shared/slider :: slider(movies=${randomMovies})}"></div>
 
 <div class="general">
-    <h4 class="latest-text w3_latest_text">Featured Movies</h4>
+    <h4 class="latest-text w3_latest_text">Movies</h4>
     <div class="container">
+        <ul class="nav nav-tabs" id="myTab" role="tablist" style="float: right">
+            <input type="hidden" id="typeOfSort" value="name">
+            <li class="nav-item active">
+                <a class="nav-link active" id="Name-tab" data-toggle="tab" href="#Name" role="tab" aria-controls="Name" aria-selected="true">Name</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="PublishYear-tab" data-toggle="tab" href="#PublishYear" role="tab" aria-controls="PublishYear" aria-selected="false">Publish Year</a>
+            </li>
+        </ul>
+        <div class="clearfix"> </div>
         <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
             <div id="myTabContent" class="tab-content">
                 <div role="tabpanel" class="tab-pane fade active in" id="home" aria-labelledby="home-tab">
@@ -72,15 +82,26 @@
             $('#infoModal').modal('show')
         }
 
-        start(0);
 
-        function start(x){
+       if($('#Name-tab').click(function () {
+             start(0,"name");
+             $('#typeOfSort').val("name")
+        }))
+        if($('#PublishYear-tab').click(function () {
+             start(0,"publishYear");
+            $('#typeOfSort').val("publishYear")
+        }))
+
+        start(0,"name");
+
+        function start(x,type){
             $.ajax({
                 url:'/api/movies',
                 dataType:'json',
                 methot:'GET',
                 data:{
-                    page:x
+                    page:x,
+                    sort:type
                 }
             }).done(output)
         }
@@ -114,7 +135,6 @@
                         '                            </div>\n' +
                         '                        </div>'
                 })
-
             }else {
                 $.each(data.content,function (v,k) {
                     text+=' <div class="col-md-2 w3l-movie-gride-agile"  style="width: 20%">\n' +
@@ -148,7 +168,7 @@
             $('#movies').html(text)
 
             $('.page-link').click(function () {
-                start( parseInt(this.text)-1 );
+                start( parseInt(this.text)-1,$('#typeOfSort').val());
             })
 
 

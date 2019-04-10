@@ -1,10 +1,19 @@
 
 <html xmlns:th="http://www.thymeleaf.org">
-<div th:replace="~{admin/shared/head :: head}"></div>
+<div th:replace="~{admin/shared/head :: head(title='Admin Home')}"></div>
 <body>
 <div class="page-container">
     <div th:replace="~{admin/shared/sidebar :: sidebar}"></div>
-    <div th:replace="~{admin/shared/container :: container}"></div>
+    <div class="main-content">
+        <div th:replace="~{admin/shared/container :: header(title='Home')}"></div>
+            <div class="card">
+                <div class="card-body">
+                  <h4 style="text-align: center">Welcome to Admin Page</h4>
+                   <br> Name :  <span th:text="${user.name}"></span>
+                  <br> Email : <span th:text="${user.email}"></span>
+                </div>
+            </div>
+    </div>
     <div th:replace="~{admin/shared/footer :: footer}"></div>
     <div th:replace="~{admin/shared/javascripts :: js}"></div>
 </div>

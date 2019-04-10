@@ -31,8 +31,8 @@ public class RestMovies {
     }
 
     @GetMapping("/movies")
-    public Page<Movie> getMovies(@RequestParam(defaultValue = "0", name = "page") int page){
-        return  movieService.getPages(page,10);
+    public Page<Movie> getMovies(@RequestParam(defaultValue = "0", name = "page") int page,@RequestParam(defaultValue = "name", name = "sort") String sort){
+        return  movieService.getPages(page,10,sort);
     }
 
     @GetMapping("/collections")

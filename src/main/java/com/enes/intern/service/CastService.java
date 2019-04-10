@@ -1,14 +1,10 @@
 package com.enes.intern.service;
 
 import com.enes.intern.model.Cast;
-import com.enes.intern.model.Movie;
 import com.enes.intern.repository.CastRepository;
-import com.enes.intern.repository.MovieRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class CastService {
@@ -30,4 +26,6 @@ public class CastService {
     public void deleteById(Long id) {
      castRepository.deleteById(id);
     }
+
+    public List<Cast> getCastBySearchName(String name){return castRepository.getCastBySearchName(name);}
 }

@@ -64,12 +64,8 @@ public class MovieService {
     public List<Movie> findAll(){
         return movieRepository.findAll();
     }
-    public Page<Movie> getPages(int page,int size){
-        return movieRepository.findAll(PageRequest.of(page,size,Sort.by("name")));
-    }
-
-    public Page<Movie> getPagesWithSort(int page,int size){
-        return movieRepository.findAll(PageRequest.of(page,size,Sort.by("date")));
+    public Page<Movie> getPages(int page,int size,String sort){
+        return movieRepository.findAll(PageRequest.of(page,size,Sort.by(sort)));
     }
 
     public Movie findById(Long id){return movieRepository.findById(id).get();}
@@ -83,4 +79,10 @@ public class MovieService {
         return movieRepository.getRandomMovie();
     }
 
+    public List<Movie> getMoviesBySearchName(String name){return movieRepository.getMoviesBySearchName(name);}
+
+    public List<Movie> getCastMoviesBySearchName(String name){return movieRepository.getCastMoviesBySearchName(name);}
+
+    public List<Movie> getMoviesByCastId(Long id) { return movieRepository.getMoviesByCastId(id);
+    }
 }
