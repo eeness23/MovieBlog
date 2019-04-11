@@ -71,8 +71,8 @@ Sitede bulucağınız gibi aşağıda bazılarını yazdım.
 
 ```
           Admin            |            User
-eposta : admin@gmail.com   |   eposta : enes@gmail.com
-şifre  : admin             |   şifre  : enes
+eposta : admin@gmail.com   |   eposta : user@gmail.com
+şifre  : admin             |   şifre  : user
 ```
 <br>Öncelikle gecici oluşturduğum veritabanında, kullanıcıların koleksiyonu vardır.Bundan dolayı Home sayfasını actığımızda, direk koleksiyonlara film eklemek icin buton gelmektedir.
 <br> Yeni bir kullanıcı oluşturduğunuzda ise MUTLAKA bir koleksiyon oluşturmalısınız yoksa ekleme butonu aktif olmayacaktır.
